@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FoodExpress - Delivery App</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f8f8;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #ff7f50;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .navbar .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .navbar ul li a:hover {
+      text-decoration: underline;
+    }
+   
+
+
+
+    .search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.search-bar input {
+  padding: 0.4rem;
+  border-radius: 4px;
+  border: none;
+  width: 160px;
+}
+
+.search-bar button {
+  padding: 0.4rem 1rem;
+  background-color: white;
+  color: #ff7f50;
+  border: 2px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.search-bar button:hover {
+  background-color: #ffe0d0;
+}
+
+
+    /* Food Section */
+    #food-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+    }
+
+    .food-item {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .food-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin-top: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #cart-section {
+      padding: 1rem 2rem;
+      background-color: #fff;
+      border-top: 2px solid #eee;
+    }
+
+    #cart-items {
+      list-style: none;
+      padding: 0;
+    }
+
+    #cart-items li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 99;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 2rem;
+      width: 300px;
+      border-radius: 8px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+
+    .modal-content h2 {
+      margin-top: 0;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .close {
+      float: right;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar ul {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .search-bar {
+        margin-top: 1rem;
+      }
+    }
+    .nav-img{
+        margin-left: 55px;
+        margin-top: 40px;
+        border-radius: 40px;
+    }
+    .nav-imges{
+        height: 82px;
+        width: 82px;
+        border-radius: 20%;
+    }
+    .menu-image{
+        height: 200px;
+        width: 200px;
+        margin: 10px;
+        margin-left: 20px;
+        border-radius: 200px;
+    }
+    .heading{
+        margin-left: 50px;
+    }
+    .mm{
+        margin-left: 50px;
+    }
+    .footer {
+  background-color: #2d2d2d;
+  color: white;
+  padding: 2rem 1rem 1rem;
+  margin-top: 2rem;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  margin-bottom: 1rem;
+  color: #ff7f50;
+}
+
+.footer-section p,
+.footer-section ul {
+  font-size: 0.9rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+  text-decoration: underline;
+}
+
+.social-icons a {
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+.social-icons img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  border-top: 1px solid #444;
+  padding-top: 1rem;
+}
+.cart{
+
+    box-sizing: border-box;
+    width: 300px;
+    margin-left: 600px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    border: #2d2d2d;
+    
+}
+#cart-section{
+    background-color: aqua;
+    border-radius: 20px;
+}
+
+    
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div>
+          <img class="nav-imges" src="assest/Untitled design.png"alt=>
+          
+          
+        </div>
+  
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search food...">
+
+        <button onclick="performSearch()">Search</button>
+
+    </div>
+
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Menu</a></li>
+      <li><a href="#">Cart</a></li>
+      <li><a href="#" onclick="openModal()">Login</a></li>
+    </ul>
+    
+  </nav>
+  <div>
+
+    <img class="nav-img" src="assest/Food_collectionbanner-logo.jpg"alt="Delivery" >
+     
+ </div>
+
+  <!-- menu Section  -->
+
+  <div class="menu">
+      <h1 class="heading"> Select Your Food!</h1>
+      <hr>
+      <div class="mm">
+        <img class="menu-image" src="assest/menu-imagess/Thali.avif" alt="">
+      <img class="menu-image" src="assest/menu-imagess/chicken.avif" alt="">
+      <img class="menu-image" src="assest/menu-imagess/pizza.avif" alt="">
+      <img class="menu-image" src="assest/menu-imagess/Rolls.avif" alt="">
+      <img class="menu-image" src="assest/menu-imagess/fried rise.avif" alt="">
+      <img class="menu-image" src="assest/menu-imagess/dosa.avif" alt="">
+      </div>
+      
+  </div>
+  <hr>
+
+   <!-- Cart Section -->
+    <div class="cart">
+      <section id="cart-section" >
+        <h2>Your Cart</h2>
+         <ul id="cart-items"></ul>
+           <p>Total: ₹<span id="total">0</span></p>
+               </section>
+    </div>
+  
+ <hr>
+
+
+  <!-- Food Section -->
+  <main id="food-container"></main>
+
+ 
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Login</h2>
+      <input type="text" placeholder="Username" />
+      <input type="password" placeholder="Password" />
+      <button onclick="alert('Logged in (demo)!')">Login</button>
+      <p>Don't have an account? <a href="#">Sign up</a></p>
+    </div>
+  </div>
+
+  <!--footer-->
+  <footer class="footer">
+  <div class="footer-container">
+    <div class="footer-section about">
+      <h3>🍴 FoodExpress</h3>
+      <p>Thank you for visiting us!</p>
+    </div>
+
+    <div class="footer-section links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Menu</a></li>
+        <li><a href="#">Offers</a></li>
+        <li><a href="#">Cart</a></li>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section social">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#"><img src="https://img.icons8.com/ios-filled/24/facebook-new.png" alt="Facebook"/></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/24/instagram-new.png" alt="Instagram"/></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/24/twitter.png" alt="Twitter"/></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 FoodExpress. All rights reserved.</p>
+  </div>
+</footer>
+
+
+  <script>
+    const foodData = [
+      { id: 1, name: ' Burger', price: 150, img: 'https://b.zmtcdn.com/data/pictures/chains/7/11677/f4b955e8e8271c4c99d8af4ee8edc604_o2_featured_v2.jpg?output-format=webp' },
+      { id: 2, name: ' Pizza', price: 250, img: 'https://b.zmtcdn.com/data/pictures/7/20460657/3849aafaeafdfa733f23f7e70fb608ab_o2_featured_v2.jpg' },
+      { id: 3, name: ' Chicken', price: 180, img: 'https://b.zmtcdn.com/data/dish_photos/3d9/76761b8be1b423ae0a19ef7ad74b23d9.jpeg' },
+      { id: 4, name: '  rolle', price: 120, img: 'https://b.zmtcdn.com/data/dish_photos/623/5df6856f8c9da1f22331211a45b34623.jpeg' },
+      { id: 5, name: 'Thali', price: 150, img: 'https://b.zmtcdn.com/data/pictures/chains/2/18608702/4510a27f8aa23be7fba40b7cf1c45960_o2_featured_v2.jpg' },
+      { id: 6, name: 'Pizza', price: 250, img: 'https://b.zmtcdn.com/data/dish_photos/a46/f0bc207651c21ed3d1cf5a5cb7a0ca46.jpg' },
+      { id: 7, name: 'biryani', price: 180, img: 'https://b.zmtcdn.com/data/pictures/6/21772956/b3595c88713886034921d41b1d0063d8_o2_featured_v2.jpg?output-format=webp' },
+      { id: 8, name: 'Veg Noodles', price: 120, img: 'https://b.zmtcdn.com/data/pictures/4/20990654/03e305aa4258f6d60ccadc5911675a97_o2_featured_v2.jpg' },
+      { id: 9, name: 'Cheese Burger', price: 150, img: 'https://b.zmtcdn.com/data/pictures/3/21760553/ea80787a9abc8cc4bed1642a48aa69dc_o2_featured_v2.jpg' },
+      { id: 10, name: 'Panjabi Thali', price: 250, img: 'https://b.zmtcdn.com/data/pictures/0/19035820/eda171c2c561a4ebe6ba5dff5ad5a1ae_o2_featured_v2.jpg' },
+      { id: 11, name: 'Fried Chicken', price: 180, img: 'https://b.zmtcdn.com/data/dish_photos/152/71bd4d09278c5837c8d497ac72a56152.jpg' },
+      { id: 12, name: 'Veg Noodles', price: 120, img: 'https://b.zmtcdn.com/data/pictures/1/19728521/a062b7046e8d291c9417a99e777cb121_o2_featured_v2.jpg' },
+      { id: 13, name: 'Cheese Burger', price: 150, img: 'https://b.zmtcdn.com/data/dish_photos/df4/91967be0157b31cc86c824c59084fdf4.jpeg' },
+      { id: 14, name: 'Margherita Pizza', price: 250, img: 'https://b.zmtcdn.com/data/pictures/chains/2/20804012/1f4763cf627babda2ec3fd07e2cc512b_o2_featured_v2.jpg' },
+      { id: 15, name: 'Fried Chicken', price: 180, img: 'https://b.zmtcdn.com/data/dish_photos/e13/b1dcfee2588258018e7685ba35d0ae13.jpeg' },
+      { id: 16, name: 'Veg Noodles', price: 120, img: 'https://b.zmtcdn.com/data/dish_photos/4a0/bea300796b7f79d171db80143a89b4a0.jpg' },
+      { id: 17, name: 'Cheese Burger', price: 150, img: 'https://b.zmtcdn.com/data/dish_photos/1b4/167aeccf27bab14940fa646c8328b1b4.png' },
+      { id: 18, name: 'Burger', price: 250, img: 'https://b.zmtcdn.com/data/pictures/6/20204896/374e8e26b3a8bbf6ac5ba4ba33ae04dd_o2_featured_v2.jpg' },
+      { id: 19, name: ' Chicken', price: 180, img: 'https://b.zmtcdn.com/data/dish_photos/689/e7df53796d7255dc9a2047c551f24689.jpg' },
+      { id: 20, name: 'Veg Noodles', price: 120, img: 'https://b.zmtcdn.com/data/pictures/4/20990654/03e305aa4258f6d60ccadc5911675a97_o2_featured_v2.jpg' },
+      { id: 21, name: 'Biryani', price: 150, img: 'https://b.zmtcdn.com/data/dish_photos/378/494a6e7540e07fee80352252dd526378.jpeg' },
+      { id: 22, name: 'Margherita Pizza', price: 250, img: 'https://b.zmtcdn.com/data/dish_photos/3b5/21f8b79e66a380476c3466251e4d53b5.jpeg' },
+      { id: 23, name: ' Chicken', price: 180, img: 'https://b.zmtcdn.com/data/dish_photos/57a/7b65a8dcb198e4cd3dbad0a3bcc8a57a.jpg' },
+      { id: 24, name: 'Biryani', price: 120, img: 'https://b.zmtcdn.com/data/pictures/chains/9/19230129/c32bd42228b68aab98478a671b1ca32c_o2_featured_v2.jpg?output-format=webp' },
+    ];
+
+    let cart = [];
+
+    const foodContainer = document.getElementById('food-container');
+    const cartItems = document.getElementById('cart-items');
+    const cartCount = document.getElementById('cart-count');
+    const totalDisplay = document.getElementById('total');
+
+    function displayFoods(foods) {
+      foodContainer.innerHTML = '';
+      foods.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'food-item';
+        div.innerHTML = `
+          <img src="${item.img}" alt="${item.name}"/>
+          <h3>${item.name}</h3>
+          <p>₹${item.price}</p>
+          <button onclick="addToCart(${item.id})">Add to Cart</button>
+        `;
+        foodContainer.appendChild(div);
+      });
+    }
+
+    function addToCart(id) {
+      const foodItem = foodData.find(item => item.id === id);
+      cart.push(foodItem);
+      updateCart();
+    }
+
+    function updateCart() {
+      cartItems.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price;
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - ₹${item.price}`;
+        cartItems.appendChild(li);
+      });
+      totalDisplay.textContent = total;
+    }
+    function performSearch() {
+  const searchTerm = document.getElementById('search').value.toLowerCase();
+  const filtered = foodData.filter(food => food.name.toLowerCase().includes(searchTerm));
+  displayFoods(filtered);
+}
+
+
+    // Modal functions
+    function openModal() {
+      document.getElementById('loginModal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('loginModal').style.display = 'none';
+    }
+
+    // Search function
+    document.getElementById('search').addEventListener('input', function () {
+      const searchTerm = this.value.toLowerCase();
+      const filtered = foodData.filter(food => food.name.toLowerCase().includes(searchTerm));
+      displayFoods(filtered);
+    });
+
+    // Init
+    displayFoods(foodData);
+  </script>
+</body>
+</html>
