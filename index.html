@@ -9,6 +9,8 @@
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f8f8f8;
+      max-width: 100vw;
+      overflow-x: hidden;
     }
 
     /* Navbar */
@@ -281,6 +283,65 @@
     background-color: aqua;
     border-radius: 20px;
 }
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .search-bar button {
+    width: 100%;
+  }
+
+  .nav-img {
+    width: 100%;
+    margin: 20px 0;
+  }
+
+  .menu-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .cart {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .modal-content {
+    width: 90%;
+  }
+}
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-section {
+    margin-bottom: 1.5rem;
+  }
+}
+
+
+
+
 
     
   </style>
@@ -489,6 +550,8 @@
 
     // Init
     displayFoods(foodData);
+
+    
   </script>
 </body>
 </html>
